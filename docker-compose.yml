@@ -1,0 +1,42 @@
+version: "3.8"
+
+services:
+  frontend:
+    container_name: Frontend
+    build: ./Frontend
+    ports:
+      - "6981:80"
+    depends_on:
+      - backend
+
+  hr:
+    container_name: HR
+    build: ./HR
+    ports:
+      - "6982:80"
+    depends_on:
+      - backend
+
+  backend:
+    container_name: Backend
+    build: ./Backend
+    ports:
+      - "3059:3059"
+    depends_on:
+      - postgres
+
+  postgres:
+    container_name: postgres90
+    image: postgres:15
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: admin123
+      POSTGRES_DB: Leave
+    ports:
+      - "8011:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:
+
